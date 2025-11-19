@@ -8,11 +8,15 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../../App';
 import { getUserProfile, getSavedContacts, SavedContact } from '../services/storage';
 import { initNFC, isNFCEnabled, readNFC, startNFCListener, stopNFCListener } from '../services/nfc';
 import { UserProfile } from '../services/storage';
 
-export default function HomeScreen({ navigation }: any) {
+type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
+
+export default function HomeScreen({ navigation }: HomeScreenProps) {
   const [nfcSupported, setNfcSupported] = useState(false);
   const [nfcEnabled, setNfcEnabled] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -173,7 +177,7 @@ export default function HomeScreen({ navigation }: any) {
           <FlatList
             data={contacts}
             renderItem={renderContact}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item: SavedContact) => item.id}
             style={styles.contactsList}
           />
         )}

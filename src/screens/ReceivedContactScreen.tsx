@@ -8,16 +8,11 @@ import {
   Alert,
   Linking,
 } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../../App';
 import { UserProfile, saveContact } from '../services/storage';
 
-interface ReceivedContactScreenProps {
-  route: {
-    params: {
-      contact: UserProfile;
-    };
-  };
-  navigation: any;
-}
+type ReceivedContactScreenProps = StackScreenProps<RootStackParamList, 'ReceivedContact'>;
 
 export default function ReceivedContactScreen({
   route,

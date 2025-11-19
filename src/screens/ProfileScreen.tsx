@@ -8,9 +8,13 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../../App';
 import { UserProfile, saveUserProfile, getUserProfile } from '../services/storage';
 
-export default function ProfileScreen({ navigation }: any) {
+type ProfileScreenProps = StackScreenProps<RootStackParamList, 'Profile'>;
+
+export default function ProfileScreen({ navigation }: ProfileScreenProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -72,7 +76,7 @@ export default function ProfileScreen({ navigation }: any) {
   };
 
   const removeCustomLink = (index: number) => {
-    setCustomLinks(customLinks.filter((_, i) => i !== index));
+    setCustomLinks(customLinks.filter((_: any, i: number) => i !== index));
   };
 
   return (
@@ -146,7 +150,7 @@ export default function ProfileScreen({ navigation }: any) {
 
       <Text style={styles.sectionTitle}>Дополнительные ссылки</Text>
 
-      {customLinks.map((link, index) => (
+      {customLinks.map((link: { label: string; url: string }, index: number) => (
         <View key={index} style={styles.linkItem}>
           <View style={styles.linkInfo}>
             <Text style={styles.linkLabel}>{link.label}</Text>

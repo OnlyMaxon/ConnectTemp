@@ -70,7 +70,7 @@ export const readNFC = async (): Promise<UserProfile | null> => {
       for (const record of ndefRecords) {
         if (record.payload) {
           // Декодируем payload
-          const text = Ndef.text.decodePayload(record.payload);
+          const text = Ndef.text.decodePayload(new Uint8Array(record.payload));
           
           try {
             const data = JSON.parse(text);
@@ -103,12 +103,15 @@ export const startNFCListener = async (
     await NfcManager.registerTagEvent();
     
     // Устанавливаем обработчик события
-    NfcManager.setEventListener(NfcTech.Ndef, async () => {
+    const handleTag = async () => {
       const profile = await readNFC();
       if (profile) {
         onContactReceived(profile);
       }
-    });
+    };
+    
+    // Запускаем обработку в фоне
+    handleTag();
   } catch (error) {
     console.error('NFC listener error:', error);
   }

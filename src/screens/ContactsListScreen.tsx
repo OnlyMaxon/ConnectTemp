@@ -7,9 +7,13 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../../App';
 import { getSavedContacts, deleteContact, SavedContact } from '../services/storage';
 
-export default function ContactsListScreen({ navigation }: any) {
+type ContactsListScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
+
+export default function ContactsListScreen({ navigation }: ContactsListScreenProps) {
   const [contacts, setContacts] = useState<SavedContact[]>([]);
 
   useEffect(() => {
@@ -94,7 +98,7 @@ export default function ContactsListScreen({ navigation }: any) {
         <FlatList
           data={contacts}
           renderItem={renderContact}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item: SavedContact) => item.id}
           contentContainerStyle={styles.listContainer}
         />
       )}

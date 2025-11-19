@@ -7,8 +7,16 @@ import 'react-native-gesture-handler';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import ReceivedContactScreen from './src/screens/ReceivedContactScreen';
+import { UserProfile } from './src/services/storage';
 
-const Stack = createStackNavigator();
+// Определяем типы для параметров навигации
+export type RootStackParamList = {
+  Home: undefined;
+  Profile: undefined;
+  ReceivedContact: { contact: UserProfile };
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
